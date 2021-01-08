@@ -5,8 +5,8 @@ const initialState = [
     isCompleted: false,
   },
   {
-    id: 1,
-    desc: 'TO DO 1',
+    id: 2,
+    desc: 'TO DO 2',
     isCompleted: false,
   },
 ];

@@ -1,14 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import AppView from './src';
+import App from './src';
 import store from './src/store';
 
-const App = () => {
+export default () => {
   return (
     <Provider store={store}>
-      <AppView />
+      <App />
     </Provider>
   );
 };
-
-export default App;
