@@ -1,34 +1,28 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import { ListItem } from '../src/components';
 
-const data = [
-  {
-    id: 1,
-    desc: 'TO DO 1',
-    isCompleted: false,
-  },
-  {
-    id: 2,
-    desc: 'TO DO 2',
-    isCompleted: false,
-  },
-];
-
-const App = () => {
+const App = ({ todos }) => {
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
-        data={data}
-        keyExtractor={(x) => x.id}
+        data={todos}
+        keyExtractor={(x) => String(x.id)}
         renderItem={({ item }) => <ListItem {...item} onPress={() => {}} />}
       />
     </View>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  todos: state.todos,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 const styles = StyleSheet.create({
   container: {
