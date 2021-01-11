@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { ListItem, Input } from '../src/components';
-import { complete, submit } from './reducers/todos';
+import { complete, saveTodo } from './reducers/todos';
 
-const App = ({ todos, complete, submit }) => {
+const App = ({ todos, complete, saveTodo }) => {
   const [value, setValue] = useState('');
 
   const handleChange = (value) => {
@@ -12,7 +12,7 @@ const App = ({ todos, complete, submit }) => {
   };
 
   const handleSubmit = (value) => {
-    submit(value);
+    saveTodo(value);
     setValue('');
   };
 
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   complete,
-  submit,
+  saveTodo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

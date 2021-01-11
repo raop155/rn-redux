@@ -12,6 +12,8 @@ const initialState = [
 ];
 
 const COMPLETE = 'COMPLETE';
+const START_SUBMIT = 'START_SUBMIT';
+const ERROR_SUBMIT = 'START_SUBMIT';
 const SUBMIT = 'SUBMIT';
 
 export const complete = (id) => ({
@@ -19,17 +21,21 @@ export const complete = (id) => ({
   payload: id,
 });
 
-export const submit = (desc) => ({
+export const startSubmit = () => ({
+  type: START_SUBMIT,
+});
+
+export const errorSubmit = (error) => ({
+  type: ERROR_SUBMIT,
+  error,
+});
+
+export const submit = (payload) => ({
   type: SUBMIT,
-  payload: {
-    id: Math.random().toString(36),
-    desc,
-    completed: false,
-  },
+  payload,
 });
 
 const todos = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case COMPLETE:
       return state.map((x) => (x.id === action.payload ? { ...x, completed: !x.completed } : x));
@@ -41,3 +47,26 @@ const todos = (state = initialState, action) => {
 };
 
 export default todos;
+
+export const saveTodo = (desc) => async (dispatch, getState) => {
+  const state = getState();
+  console.log(state);
+  dispatch(startSubmit());
+  try {
+    const todo = {
+      desc,
+      completed: false,
+    };
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
+      method: 'POST',
+      body: JSON.stringify(todo),
+    });
+
+    const data = await response.json();
+    todo.id = data.id;
+
+    dispatch(submit(todo));
+  } catch (error) {
+    dispatch(errorSubmit(e));
+  }
+};
