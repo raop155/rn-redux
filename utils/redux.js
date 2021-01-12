@@ -56,6 +56,8 @@ const fetchReducerCreator = (resource) => {
     [FETCH_ERROR]: fetchErrorReduce,
   });
 
+  console.log(reducer.toString());
+
   const startFetch = makeActionCreator(FETCH_START);
   const successFetch = makeActionCreator(FETCH_SUCCESS, 'payload');
   const errorFetch = makeActionCreator(FETCH_ERROR, 'error');
@@ -77,5 +79,6 @@ const fetchReducerCreator = (resource) => {
 };
 
 const createdReducer = fetchReducerCreator('todos');
+// console.log(createdReducer.fetch.toString());
 export default createdReducer;
 export const fetch = createdReducer.fetch;
